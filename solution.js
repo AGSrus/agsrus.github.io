@@ -48,12 +48,8 @@ divPicture.appendChild(currentImage);
 divPicture.appendChild(commentsForm);
 console.log('aaa',divPicture.style.position)
 
-divPicture.style.position = "relative"
+//divPicture.style.position = "relative"
 wrap.appendChild(divPicture);
-
-
-
-
 
 
 //canvas
