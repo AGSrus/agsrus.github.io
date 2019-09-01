@@ -47,8 +47,6 @@ hideCommets.addEventListener('change', () => {
 //Создадим div и переместим туда img и создадим в нем canvas
 const divPicture = document.createElement('div');
 divCurrentImage.style.position = "relative"
-//wrap.style.paddingTop = '300px'
-//divCurrentImage.style.height = '1000px'
 divPicture.appendChild(divCurrentImage);
 divPicture.appendChild(commentsForm);
 
