@@ -1,5 +1,8 @@
 const currentImage = document.querySelector('.current-image');
 currentImage.style.zIndex = 2;
+const divCurrentImage = document.createElement('div');
+divCurrentImage.appendChild(currentImage);
+
 const body = document.querySelector('body');
 const wrap = document.querySelector('.wrap');
 let id, imgID;
@@ -43,8 +46,10 @@ hideCommets.addEventListener('change', () => {
 
 //Создадим div и переместим туда img и создадим в нем canvas
 const divPicture = document.createElement('div');
-
-divPicture.appendChild(currentImage);
+divCurrentImage.style.position = "relative"
+//wrap.style.paddingTop = '300px'
+//divCurrentImage.style.height = '1000px'
+divPicture.appendChild(divCurrentImage);
 divPicture.appendChild(commentsForm);
 
 //divPicture.style.position = "relative"
@@ -584,8 +589,9 @@ function wsConnect(id=window.imgID) {
     const data = JSON.parse(event.data);
     console.log('ответ ws')
     let json = getInformation(window.imgID);
-    let objectCommments = json.comments
-    mask.src = json.mask
+    let objectCommments = json.comments;
+    mask.src = json.mask;
+    wrap.style.paddingTop = `${(document.querySelector('.current-image').height)/2+100}px`
     if (objectCommments !== undefined) {
       let keys = Object.keys(json.comments);
       for (let key of keys) {
@@ -663,6 +669,7 @@ function publishDefaultState() {
   liNew.style.display = "inline-block";
   commentsForm.style.display = "none";
   currentImage.src = '';
+
   document.querySelector('.error').style.display = 'none';
 }
 
