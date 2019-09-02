@@ -49,8 +49,6 @@ const divPicture = document.createElement('div');
 divCurrentImage.style.position = "relative"
 divPicture.appendChild(divCurrentImage);
 divPicture.appendChild(commentsForm);
-
-//divPicture.style.position = "relative"
 wrap.appendChild(divPicture);
 
 //canvas
@@ -61,8 +59,8 @@ const mask = document.createElement('img');
 
 mask.classList.add('mask')
 mask.classList.add('current-image');
-divPicture.appendChild(paintMask);
-divPicture.appendChild(mask);
+divCurrentImage.appendChild(paintMask);
+divCurrentImage.appendChild(mask);
 const draw = document.querySelector('.draw');
 const drawEl = document.querySelector('.draw-tools');
 
@@ -169,7 +167,7 @@ function relocationMenu(position, value) {
 
 ////////////////////////////////////////////////////////////////////////////////
 //События
-liNew.addEventListener('click', main); // Загрузка нового изображения
+//liNew.addEventListener('click', main); // Загрузка нового изображения
 liNew.addEventListener('click', () => fileInput.click()); // Вызываем input(file)
 //Выбираем изображение
 fileInput.addEventListener('change', (event) => {
@@ -667,10 +665,29 @@ function publishDefaultState() {
   liNew.style.display = "inline-block";
   commentsForm.style.display = "none";
   currentImage.src = '';
-
   document.querySelector('.error').style.display = 'none';
 }
 
+function relocationMenu(position, value) {
+  const limitPos = wrap.offsetLeft + wrap.offsetWidth - menu.offsetWidth - 1;
+  if (parseInt(menu.style.left) < 0) {
+    menu.style.left = '0px';
+  } else {
+    if (limitPos === parseInt(menu.style.left)) {
+      menu.style.left = (parseInt(menu.style.left) - value) + 'px';
+    } else if ((limitPos - value) < parseInt(menu.style.left)) {
+      menu.style.left = (position - value) + 'px';
+    };
+  };
+};
+
+share.addEventListener('click', () => startShareMode(194));
+burger.addEventListener('click', () => startShareMode(127));
+
+function startShareMode(value) {
+  const sharePos = wrap.offsetLeft + wrap.offsetWidth - menu.offsetWidth - 1;
+  relocationMenu(sharePos, value)
+};
 
 function main() {
   publishDefaultState();
