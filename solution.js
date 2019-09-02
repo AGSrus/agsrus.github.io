@@ -681,8 +681,8 @@ function relocationMenu(position, value) {
   };
 };
 
-share.addEventListener('click', () => startShareMode(194));
-burger.addEventListener('click', () => startShareMode(127));
+share.addEventListener('click', () => startShareMode(200));
+burger.addEventListener('click', () => startShareMode(130));
 
 function startShareMode(value) {
   const sharePos = wrap.offsetLeft + wrap.offsetWidth - menu.offsetWidth - 1;
