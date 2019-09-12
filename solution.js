@@ -26,18 +26,23 @@ const share = document.querySelector('.share');
 const shareEl = document.querySelector('.share-tools');
 const commentsTools = document.querySelector('.comments-tools')
 
+const ii = document.querySelector('.menu__toggle')
+
 const showComments = commentsTools.querySelector('#comments-on');
 showComments.addEventListener('change', () => {
   const comments = document.querySelectorAll('.new_comment');
+  commentsForm.classList.remove('noActive')
   for (let comment of comments) {
     comment.parentElement.style.display = "inline-block";
   }
-  commentsForm.style.display = "inline-block";
+  //commentsForm.style.display = "inline-block";
+  closeInputComment();
 })
 
 const hideCommets = commentsTools.querySelector('#comments-off');
 hideCommets.addEventListener('change', () => {
   const comments = document.querySelectorAll('.new_comment');
+  commentsForm.classList.add('noActive')
   for (let comment of comments) {
     comment.parentElement.style.display = "none";
   }
@@ -173,6 +178,7 @@ liNew.addEventListener('click', () => fileInput.click()); // Вызываем in
 fileInput.addEventListener('change', (event) => {
   const files = event.currentTarget.files;
   sendFile(files[0]);
+  publishDefaultState();
   }
 );
 
@@ -274,15 +280,18 @@ function openInputComment() {
 }
 
 currentImage.addEventListener('click', (event) => {
+  // 1
   if(liComments.classList.contains('active')) {
     document.querySelectorAll('.loader')[1].style.display = "none";
-    commentsForm.style.display = "inline-block";
-    commentsForm.style.position = 'absolute';
-    commentsForm.style.zIndex = 5;
-    let offsetTop = currentImage.getBoundingClientRect().top + document.body.scrollTop - 18;
-    let offsetLeft = currentImage.getBoundingClientRect().left + document.body.scrollLeft - 20;
-    commentsForm.style.top = event.layerY + offsetTop + 'px';
-    commentsForm.style.left = event.layerX  + offsetLeft + 'px';
+    if (!commentsForm.classList.contains('noActive')) {
+      commentsForm.style.display = "inline-block";
+      commentsForm.style.position = 'absolute';
+      commentsForm.style.zIndex = 5;
+      let offsetTop = currentImage.getBoundingClientRect().top + document.body.scrollTop - 18;
+      let offsetLeft = currentImage.getBoundingClientRect().left + document.body.scrollLeft - 20;
+      commentsForm.style.top = event.layerY + offsetTop + 'px';
+      commentsForm.style.left = event.layerX  + offsetLeft + 'px';
+    }
   }
   closeInputComment();
   removeNewInput();
@@ -559,6 +568,7 @@ function addDivComment(object) {
     marker.classList.add('new_input');
   })
   closeInputComment();
+  marker.checked = true//
 }
 
 //проверяем коментарии на повтор
@@ -587,6 +597,10 @@ function wsConnect(id=window.imgID) {
     let json = getInformation(window.imgID);
     let objectCommments = json.comments;
     mask.src = json.mask;
+    let array = mask.src.split('/');
+    if (array[array.length - 1] === 'undefined') {
+      mask.src = '';
+    }
     wrap.style.paddingTop = `${(document.querySelector('.current-image').height)/2+100}px`
     if (objectCommments !== undefined) {
       let keys = Object.keys(json.comments);
