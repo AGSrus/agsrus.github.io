@@ -679,6 +679,7 @@ function publishDefaultState() {
   liNew.style.display = "inline-block";
   commentsForm.style.display = "none";
   currentImage.src = '';
+  resizePaintMask()
   document.querySelector('.error').style.display = 'none';
 }
 
